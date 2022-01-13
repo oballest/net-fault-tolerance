@@ -13,7 +13,7 @@ var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
 
 builder.Services.AddHttpClient("retry", client => 
     {
-        client.BaseAddress = new Uri("http://localhost:8090");
+        client.BaseAddress = new Uri("http://fault-tolerance-endpoint:8080");
         client.DefaultRequestHeaders.Add("Accept","text/plain");
         client.Timeout = TimeSpan.FromSeconds(20);
     }
@@ -26,7 +26,7 @@ builder.Services.AddHttpClient("retry", client =>
 
 builder.Services.AddHttpClient("timeOut", client => 
     {
-        client.BaseAddress = new Uri("http://localhost:8090");
+        client.BaseAddress = new Uri("http://fault-tolerance-endpoint:8080");
         client.DefaultRequestHeaders.Add("Accept","text/plain");
         client.Timeout = TimeSpan.FromSeconds(20);
     }
@@ -34,7 +34,7 @@ builder.Services.AddHttpClient("timeOut", client =>
 
 builder.Services.AddHttpClient("circuitBreaker", client => 
     {
-        client.BaseAddress = new Uri("http://localhost:8090");
+        client.BaseAddress = new Uri("http://fault-tolerance-endpoint:8080");
         client.DefaultRequestHeaders.Add("Accept","text/plain");
         client.Timeout = TimeSpan.FromSeconds(20);
     }
