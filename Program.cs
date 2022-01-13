@@ -13,8 +13,9 @@ var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(10);
 
 builder.Services.AddHttpClient("retry", client => 
     {
-        client.BaseAddress = new Uri("http://localhost:8080");
+        client.BaseAddress = new Uri("http://localhost:8090");
         client.DefaultRequestHeaders.Add("Accept","text/plain");
+        client.Timeout = TimeSpan.FromSeconds(20);
     }
 ).AddTransientHttpErrorPolicy( policyBuilder => policyBuilder.WaitAndRetryAsync(new[]
 {
@@ -25,15 +26,17 @@ builder.Services.AddHttpClient("retry", client =>
 
 builder.Services.AddHttpClient("timeOut", client => 
     {
-        client.BaseAddress = new Uri("http://localhost:8080");
+        client.BaseAddress = new Uri("http://localhost:8090");
         client.DefaultRequestHeaders.Add("Accept","text/plain");
+        client.Timeout = TimeSpan.FromSeconds(20);
     }
 ).AddPolicyHandler(timeoutPolicy);
 
 builder.Services.AddHttpClient("circuitBreaker", client => 
     {
-        client.BaseAddress = new Uri("http://localhost:8080");
+        client.BaseAddress = new Uri("http://localhost:8090");
         client.DefaultRequestHeaders.Add("Accept","text/plain");
+        client.Timeout = TimeSpan.FromSeconds(20);
     }
 ).AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(
        handledEventsAllowedBeforeBreaking: 3,
